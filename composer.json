@@ -1,0 +1,25 @@
+{
+    "name": "oat-sa/lib-lti1p3-deep-linking",
+    "description": "OAT LTI 1.3 Advantage Deep Linking Library",
+    "type": "library",
+    "license": "GPL-2.0-only",
+    "require": {
+        "ext-json": "*",
+        "php": "^7.2",
+        "oat-sa/lib-lti1p3-core": "dev-feature/deep-link",
+    },
+    "require-dev": {
+        "phpunit/phpunit": "8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "OAT\\Library\\Lti1p3DeepLinking\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OAT\\Library\\Lti1p3DeepLinking\\Tests\\": "tests/",
+            "OAT\\Library\\Lti1p3Core\\Tests\\": "vendor/oat-sa/lib-lti1p3-core/tests/"
+        }
+    }
+}
