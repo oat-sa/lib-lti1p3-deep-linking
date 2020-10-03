@@ -24,7 +24,7 @@ namespace OAT\Library\Lti1p3DeepLinking\Message\Launch\Builder;
 
 use OAT\Library\Lti1p3Core\Exception\LtiException;
 use OAT\Library\Lti1p3Core\Exception\LtiExceptionInterface;
-use OAT\Library\Lti1p3Core\Message\Launch\Builder\PlatformLaunchBuilder;
+use OAT\Library\Lti1p3Core\Message\Launch\Builder\PlatformOriginatingLaunchBuilder;
 use OAT\Library\Lti1p3Core\Message\Payload\Claim\DeepLinkingSettingsClaim;
 use OAT\Library\Lti1p3Core\Registration\RegistrationInterface;
 use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
@@ -34,12 +34,12 @@ use Throwable;
 /**
  * @see https://www.imsglobal.org/spec/lti-dl/v2p0#deep-linking-request-message
  */
-class DeepLinkingLaunchRequestBuilder extends PlatformLaunchBuilder
+class DeepLinkingLaunchRequestBuilder extends PlatformOriginatingLaunchBuilder
 {
     /**
      * @throws LtiExceptionInterface
      */
-    public function buildLaunchRequest(
+    public function buildDeepLinkingLaunchRequest(
         DeepLinkingSettingsInterface $settings,
         RegistrationInterface $registration,
         string $loginHint,
@@ -62,7 +62,7 @@ class DeepLinkingLaunchRequestBuilder extends PlatformLaunchBuilder
                 ])
             );
 
-            return $this->buildPlatformLaunch(
+            return $this->buildPlatformOriginatingLaunch(
                 $registration,
                 LtiMessageInterface::LTI_MESSAGE_TYPE_DEEP_LINKING_REQUEST,
                 $registration->getTool()->getDeepLinkingUrl(),

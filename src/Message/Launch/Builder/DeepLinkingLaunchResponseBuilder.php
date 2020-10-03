@@ -24,7 +24,7 @@ namespace OAT\Library\Lti1p3DeepLinking\Message\Launch\Builder;
 
 use OAT\Library\Lti1p3Core\Exception\LtiException;
 use OAT\Library\Lti1p3Core\Exception\LtiExceptionInterface;
-use OAT\Library\Lti1p3Core\Message\Launch\Builder\ToolLaunchBuilder;
+use OAT\Library\Lti1p3Core\Message\Launch\Builder\ToolOriginatingLaunchBuilder;
 use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
 use OAT\Library\Lti1p3Core\Message\Payload\Claim\DeepLinkingContentItemsClaim;
 use OAT\Library\Lti1p3Core\Message\Payload\LtiMessagePayloadInterface;
@@ -35,12 +35,12 @@ use Throwable;
 /**
  * @see https://www.imsglobal.org/spec/lti-dl/v2p0#deep-linking-response-message
  */
-class DeepLinkingLaunchResponseBuilder extends ToolLaunchBuilder
+class DeepLinkingLaunchResponseBuilder extends ToolOriginatingLaunchBuilder
 {
     /**
      * @throws LtiExceptionInterface
      */
-    public function buildLaunchResponse(
+    public function buildDeepLinkingLaunchResponse(
         ResourceCollectionInterface $resourceCollection,
         RegistrationInterface $registration,
         string $deepLinkingReturnUrl,
@@ -60,7 +60,7 @@ class DeepLinkingLaunchResponseBuilder extends ToolLaunchBuilder
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_LOG, $deppLinkingLog)
                 ->withClaim(DeepLinkingContentItemsClaim::fromResourceCollection($resourceCollection));
 
-            return $this->buildToolLaunch(
+            return $this->buildToolOriginatingLaunch(
                 $registration,
                 LtiMessageInterface::LTI_MESSAGE_TYPE_DEEP_LINKING_RESPONSE,
                 $deepLinkingReturnUrl,
@@ -101,7 +101,7 @@ class DeepLinkingLaunchResponseBuilder extends ToolLaunchBuilder
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_ERROR_LOG, $deppLinkingErrorLog)
                 ->withClaim(new DeepLinkingContentItemsClaim());
 
-            return $this->buildToolLaunch(
+            return $this->buildToolOriginatingLaunch(
                 $registration,
                 LtiMessageInterface::LTI_MESSAGE_TYPE_DEEP_LINKING_RESPONSE,
                 $deepLinkingReturnUrl,
