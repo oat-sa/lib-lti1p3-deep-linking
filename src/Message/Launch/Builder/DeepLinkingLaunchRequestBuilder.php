@@ -22,13 +22,13 @@ declare(strict_types=1);
 
 namespace OAT\Library\Lti1p3DeepLinking\Message\Launch\Builder;
 
-use OAT\Library\Lti1p3Core\DeepLink\Settings\DeepLinkingSettingsInterface;
 use OAT\Library\Lti1p3Core\Exception\LtiException;
 use OAT\Library\Lti1p3Core\Exception\LtiExceptionInterface;
 use OAT\Library\Lti1p3Core\Message\Launch\Builder\PlatformLaunchBuilder;
 use OAT\Library\Lti1p3Core\Message\Payload\Claim\DeepLinkingSettingsClaim;
 use OAT\Library\Lti1p3Core\Registration\RegistrationInterface;
 use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
+use OAT\Library\Lti1p3DeepLinking\Settings\DeepLinkingSettingsInterface;
 use Throwable;
 
 /**

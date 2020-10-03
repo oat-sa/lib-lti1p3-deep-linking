@@ -1,1 +1,1 @@
-# LTI 1.3 Deep Linking Library
+# LTI 1.3 DeepLinking Library
