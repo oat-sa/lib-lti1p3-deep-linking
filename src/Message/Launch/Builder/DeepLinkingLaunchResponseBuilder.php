@@ -45,19 +45,19 @@ class DeepLinkingLaunchResponseBuilder extends ToolOriginatingLaunchBuilder
         RegistrationInterface $registration,
         string $deepLinkingReturnUrl,
         string $deploymentId = null,
-        string $deppLinkingData = null,
-        string $deppLinkingMessage = null,
-        string $deppLinkingLog = null,
+        string $deepLinkingData = null,
+        string $deepLinkingMessage = null,
+        string $deepLinkingLog = null,
         array $optionalClaims = []
     ): LtiMessageInterface {
         try {
-            $deppLinkingMessage = $deppLinkingMessage ?? sprintf('%s item(s) provided', $resourceCollection->count());
-            $deppLinkingLog = $deppLinkingLog ?? $deppLinkingMessage;
+            $deepLinkingMessage = $deepLinkingMessage ?? sprintf('%s item(s) provided', $resourceCollection->count());
+            $deepLinkingLog = $deepLinkingLog ?? $deepLinkingMessage;
 
             $this->builder
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_DATA, $deppLinkingData)
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_MESSAGE, $deppLinkingMessage)
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_LOG, $deppLinkingLog)
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_DATA, $deepLinkingData)
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_MESSAGE, $deepLinkingMessage)
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_LOG, $deepLinkingLog)
                 ->withClaim(DeepLinkingContentItemsClaim::fromResourceCollection($resourceCollection));
 
             return $this->buildToolOriginatingLaunch(
@@ -82,23 +82,23 @@ class DeepLinkingLaunchResponseBuilder extends ToolOriginatingLaunchBuilder
     /**
      * @throws LtiExceptionInterface
      */
-    public function buildLaunchErrorResponse(
+    public function buildDeepLinkingLaunchErrorResponse(
         RegistrationInterface $registration,
         string $deepLinkingReturnUrl,
         string $deploymentId = null,
-        string $deppLinkingData = null,
-        string $deppLinkingErrorMessage = null,
-        string $deppLinkingErrorLog = null,
+        string $deepLinkingData = null,
+        string $deepLinkingErrorMessage = null,
+        string $deepLinkingErrorLog = null,
         array $optionalClaims = []
     ): LtiMessageInterface {
         try {
-            $deppLinkingErrorMessage = $deppLinkingErrorMessage ?? 'An error occurred';
-            $deppLinkingErrorLog = $deppLinkingErrorLog ?? $deppLinkingErrorMessage;
+            $deepLinkingErrorMessage = $deepLinkingErrorMessage ?? 'An error occurred';
+            $deepLinkingErrorLog = $deepLinkingErrorLog ?? $deepLinkingErrorMessage;
 
             $this->builder
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_DATA, $deppLinkingData)
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_ERROR_MESSAGE, $deppLinkingErrorMessage)
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_ERROR_LOG, $deppLinkingErrorLog)
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_DATA, $deepLinkingData)
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_ERROR_MESSAGE, $deepLinkingErrorMessage)
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_LTI_DEEP_LINKING_ERROR_LOG, $deepLinkingErrorLog)
                 ->withClaim(new DeepLinkingContentItemsClaim());
 
             return $this->buildToolOriginatingLaunch(
