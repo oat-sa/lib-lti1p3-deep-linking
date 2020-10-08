@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace OAT\Library\Lti1p3DeepLinking\Builder;
 
+use OAT\Library\Lti1p3Core\Exception\LtiException;
+use OAT\Library\Lti1p3Core\Exception\LtiExceptionInterface;
 use OAT\Library\Lti1p3Core\Message\Payload\Claim\DeepLinkingContentItemsClaim;
 use OAT\Library\Lti1p3Core\Resource\File\File;
 use OAT\Library\Lti1p3Core\Resource\File\FileInterface;
@@ -38,9 +40,13 @@ use OAT\Library\Lti1p3Core\Resource\ResourceCollection;
 use OAT\Library\Lti1p3Core\Resource\ResourceCollectionInterface;
 use OAT\Library\Lti1p3Core\Resource\ResourceInterface;
 use Ramsey\Uuid\Uuid;
+use Throwable;
 
 class ResourceCollectionBuilder implements ResourceCollectionBuilderInterface
 {
+    /**
+     * @throws LtiExceptionInterface
+     */
     public function buildFromClaim(DeepLinkingContentItemsClaim $claim): ResourceCollectionInterface
     {
         $collection = new ResourceCollection();
@@ -52,28 +58,40 @@ class ResourceCollectionBuilder implements ResourceCollectionBuilderInterface
         return $collection;
     }
 
+    /**
+     * @throws LtiExceptionInterface
+     */
     private function buildResource(array $resourceData): ResourceInterface
     {
-        $identifier = Uuid::uuid4()->toString();
+        try {
+            $identifier = Uuid::uuid4()->toString();
 
-        switch ($resourceData['type']) {
-            case FileInterface::TYPE:
-                return new File($identifier, $resourceData['url'], $resourceData);
+            switch ($resourceData['type']) {
+                case FileInterface::TYPE:
+                    return new File($identifier, $resourceData['url'], $resourceData);
 
-            case HtmlFragmentInterface::TYPE:
-                return new HtmlFragment($identifier, $resourceData['html'], $resourceData);
+                case HtmlFragmentInterface::TYPE:
+                    return new HtmlFragment($identifier, $resourceData['html'], $resourceData);
 
-            case ImageInterface::TYPE:
-                return new Image($identifier, $resourceData['url'], $resourceData);
+                case ImageInterface::TYPE:
+                    return new Image($identifier, $resourceData['url'], $resourceData);
 
-            case LinkInterface::TYPE:
-                return new Link($identifier, $resourceData['url'], $resourceData);
+                case LinkInterface::TYPE:
+                    return new Link($identifier, $resourceData['url'], $resourceData);
 
-            case LtiResourceLinkInterface::TYPE:
-                return new LtiResourceLink($identifier, $resourceData);
+                case LtiResourceLinkInterface::TYPE:
+                    return new LtiResourceLink($identifier, $resourceData);
 
-            default:
-                return new Resource($identifier, $resourceData['type'], $resourceData);
+                default:
+                    return new Resource($identifier, $resourceData['type'], $resourceData);
+            }
+
+        } catch (Throwable $exception)  {
+            throw new LtiException(
+                sprintf('Cannot build resource: %s', $exception->getMessage()),
+                $exception->getCode(),
+                $exception
+            );
         }
     }
 }
