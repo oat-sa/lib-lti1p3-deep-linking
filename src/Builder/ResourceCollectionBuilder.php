@@ -39,7 +39,7 @@ use OAT\Library\Lti1p3Core\Resource\ResourceCollectionInterface;
 use OAT\Library\Lti1p3Core\Resource\ResourceInterface;
 use Ramsey\Uuid\Uuid;
 
-class ResourceCollectionBuilder
+class ResourceCollectionBuilder implements ResourceCollectionBuilderInterface
 {
     public function buildFromClaim(DeepLinkingContentItemsClaim $claim): ResourceCollectionInterface
     {
@@ -59,14 +59,19 @@ class ResourceCollectionBuilder
         switch ($resourceData['type']) {
             case FileInterface::TYPE:
                 return new File($identifier, $resourceData['url'], $resourceData);
+
             case HtmlFragmentInterface::TYPE:
                 return new HtmlFragment($identifier, $resourceData['html'], $resourceData);
+
             case ImageInterface::TYPE:
                 return new Image($identifier, $resourceData['url'], $resourceData);
+
             case LinkInterface::TYPE:
                 return new Link($identifier, $resourceData['url'], $resourceData);
+
             case LtiResourceLinkInterface::TYPE:
                 return new LtiResourceLink($identifier, $resourceData);
+
             default:
                 return new Resource($identifier, $resourceData['type'], $resourceData);
         }
