@@ -42,17 +42,17 @@ use OAT\Library\Lti1p3Core\Resource\ResourceInterface;
 use Ramsey\Uuid\Uuid;
 use Throwable;
 
-class ResourceCollectionBuilder implements ResourceCollectionBuilderInterface
+class ResourceCollectionFactory implements ResourceCollectionFactoryInterface
 {
     /**
      * @throws LtiExceptionInterface
      */
-    public function buildFromClaim(DeepLinkingContentItemsClaim $claim): ResourceCollectionInterface
+    public function create(array $contentItems): ResourceCollectionInterface
     {
         $collection = new ResourceCollection();
 
-        foreach ($claim->getContentItems() as $item) {
-            $collection->add($this->buildResource($item));
+        foreach ($contentItems as $item) {
+            $collection->add($this->createResource($item));
         }
 
         return $collection;
@@ -61,7 +61,15 @@ class ResourceCollectionBuilder implements ResourceCollectionBuilderInterface
     /**
      * @throws LtiExceptionInterface
      */
-    private function buildResource(array $resourceData): ResourceInterface
+    public function createFromClaim(DeepLinkingContentItemsClaim $claim): ResourceCollectionInterface
+    {
+        return $this->create($claim->getContentItems());
+    }
+
+    /**
+     * @throws LtiExceptionInterface
+     */
+    private function createResource(array $resourceData): ResourceInterface
     {
         try {
             $identifier = Uuid::uuid4()->toString();

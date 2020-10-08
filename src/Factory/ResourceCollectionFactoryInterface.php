@@ -25,7 +25,9 @@ namespace OAT\Library\Lti1p3DeepLinking\Builder;
 use OAT\Library\Lti1p3Core\Message\Payload\Claim\DeepLinkingContentItemsClaim;
 use OAT\Library\Lti1p3Core\Resource\ResourceCollectionInterface;
 
-interface ResourceCollectionBuilderInterface
+interface ResourceCollectionFactoryInterface
 {
-    public function buildFromClaim(DeepLinkingContentItemsClaim $claim): ResourceCollectionInterface;
+    public function create(array $contentItems): ResourceCollectionInterface;
+
+    public function createFromClaim(DeepLinkingContentItemsClaim $claim): ResourceCollectionInterface;
 }
