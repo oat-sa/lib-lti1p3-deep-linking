@@ -48,19 +48,17 @@ class DeepLinkingLaunchRequestBuilder extends PlatformOriginatingLaunchBuilder
         array $optionalClaims = []
     ): LtiMessageInterface {
         try {
-            $this->builder->withClaim(
-                DeepLinkingSettingsClaim::denormalize([
-                    'deep_link_return_url' => $settings->getDeepLinkingReturnUrl(),
-                    'accept_types' => $settings->getAcceptedTypes(),
-                    'accept_presentation_document_targets' => $settings->getAcceptedPresentationDocumentTargets(),
-                    'accept_media_types' => $settings->getAcceptedMediaTypes(),
-                    'accept_multiple' => $settings->shouldAcceptMultiple(),
-                    'auto_create' => $settings->shouldAutoCreate(),
-                    'title' => $settings->getTitle(),
-                    'text' => $settings->getText(),
-                    'data' => 'some data'
-                ])
-            );
+            $normalizedSettings = $settings->normalize();
+
+            $securityToken = $this->builder
+                ->withClaims($normalizedSettings)
+                ->buildMessagePayload($registration->getPlatformKeyChain())
+                ->getToken()
+                ->__toString();
+
+            $this->builder
+                ->reset()
+                ->withClaim(DeepLinkingSettingsClaim::denormalize($normalizedSettings + ['data' => $securityToken]));
 
             return $this->buildPlatformOriginatingLaunch(
                 $registration,

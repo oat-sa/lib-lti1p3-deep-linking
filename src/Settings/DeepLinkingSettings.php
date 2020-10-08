@@ -110,4 +110,18 @@ class DeepLinkingSettings implements DeepLinkingSettingsInterface
     {
         return $this->text;
     }
+
+    public function normalize(): array
+    {
+        return array_filter([
+            'deep_link_return_url' => $this->deepLinkingReturnUrl,
+            'accept_types' => $this->acceptedTypes,
+            'accept_presentation_document_targets' => $this->acceptedPresentationDocumentTargets,
+            'accept_media_types' => $this->acceptedMediaTypes,
+            'accept_multiple' => $this->acceptMultiple,
+            'auto_create' => $this->autoCreate,
+            'title' => $this->title,
+            'text' => $this->text
+        ]);
+    }
 }

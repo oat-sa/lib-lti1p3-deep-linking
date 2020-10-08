@@ -42,4 +42,6 @@ interface DeepLinkingSettingsInterface
     public function getTitle(): ?string;
 
     public function getText(): ?string;
+
+    public function normalize(): array;
 }
