@@ -1,7 +1,8 @@
 CHANGELOG
 =========
 
-0.1.0
+1.0.0
 -----
 
-* TODO
+* Added Deep Linking interactions handling for both platform and tool sides
+* Added documentation

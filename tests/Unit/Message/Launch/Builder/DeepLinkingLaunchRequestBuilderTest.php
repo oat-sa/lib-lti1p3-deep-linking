@@ -22,31 +22,127 @@ declare(strict_types=1);
 
 namespace OAT\Library\Lti1p3DeepLinking\Tests\Unit\Message\Launch\Builder;
 
+use Exception;
+use OAT\Library\Lti1p3Core\Exception\LtiExceptionInterface;
+use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
+use OAT\Library\Lti1p3Core\Message\Payload\LtiMessagePayload;
+use OAT\Library\Lti1p3Core\Registration\RegistrationInterface;
+use OAT\Library\Lti1p3Core\Resource\Link\LinkInterface;
+use OAT\Library\Lti1p3Core\Resource\LtiResourceLink\LtiResourceLinkInterface;
 use OAT\Library\Lti1p3Core\Tests\Traits\DomainTestingTrait;
 use OAT\Library\Lti1p3DeepLinking\Message\Launch\Builder\DeepLinkingLaunchRequestBuilder;
 use OAT\Library\Lti1p3DeepLinking\Settings\DeepLinkingSettings;
+use OAT\Library\Lti1p3DeepLinking\Settings\DeepLinkingSettingsInterface;
 use PHPUnit\Framework\TestCase;
 
 class DeepLinkingLaunchRequestBuilderTest extends TestCase
 {
     use DomainTestingTrait;
 
-    public function testStuff(): void
-    {
-        $subject = new DeepLinkingLaunchRequestBuilder();
+    /** @var RegistrationInterface */
+    private $registration;
 
-        $settings = new DeepLinkingSettings(
+    /** @var DeepLinkingSettingsInterface */
+    private $settings;
+
+    /** @var DeepLinkingLaunchRequestBuilder */
+    private $subject;
+
+    protected function setUp(): void
+    {
+        $this->registration = $this->createTestRegistration();
+
+        $this->settings = new DeepLinkingSettings(
             'http://platform.com/return',
-            ['link', 'ltiResourceLink'],
-            ['iframe', 'window', 'embed']
+            [
+                LinkInterface::TYPE,
+                LtiResourceLinkInterface::TYPE
+            ],
+            [
+                'iframe',
+                'window',
+                'embed'
+            ]
         );
 
-        $message = $subject->buildDeepLinkingLaunchRequest(
-            $settings,
-            $this->createTestRegistration(),
+        $this->subject = new DeepLinkingLaunchRequestBuilder();
+    }
+
+    public function testBuildDeepLinkingLaunchRequestSuccess(): void
+    {
+        $result = $this->subject->buildDeepLinkingLaunchRequest(
+            $this->settings,
+            $this->registration,
+            'loginHint',
+            null,
+            [
+                'Instructor'
+            ],
+            [
+                'a' => 'b'
+            ]
+        );
+
+        $this->assertInstanceOf(LtiMessageInterface::class, $result);
+
+        $payload = new LtiMessagePayload(
+            $this->parseJwt($result->getMandatoryParameter('lti_message_hint'))
+        );
+
+        $this->assertEquals(['Instructor'], $payload->getRoles());
+
+        $this->assertEquals('b', $payload->getClaim('a'));
+
+        $this->assertEquals(
+            $this->settings->getDeepLinkingReturnUrl(),
+            $payload->getDeepLinkingSettings()->getDeepLinkingReturnUrl()
+        );
+
+        $this->assertEquals(
+            $this->settings->getAcceptedTypes(),
+            $payload->getDeepLinkingSettings()->getAcceptedTypes()
+        );
+
+        $this->assertEquals(
+            $this->settings->getAcceptedMediaTypes(),
+            $payload->getDeepLinkingSettings()->getAcceptedMediaTypes()
+        );
+
+        $securityToken  = $this->parseJwt($payload->getDeepLinkingSettings()->getData());
+
+        $this->assertTrue(
+            $this->verifyJwt($securityToken, $this->registration->getPlatformKeyChain()->getPublicKey())
+        );
+    }
+
+    public function testBuildDeepLinkingLaunchRequestErrorOnInvalidDeploymentId(): void
+    {
+        $this->expectException(LtiExceptionInterface::class);
+        $this->expectExceptionMessage('Invalid deployment id invalid for registration registrationIdentifier');
+
+        $this->subject->buildDeepLinkingLaunchRequest(
+            $this->settings,
+            $this->registration,
+            'loginHint',
+            'invalid'
+        );
+    }
+
+    public function testBuildDeepLinkingLaunchRequestGenericError(): void
+    {
+        $this->expectException(LtiExceptionInterface::class);
+        $this->expectExceptionMessage('Cannot create deep linking launch request: custom error');
+
+        $settingsMock = $this->createMock(DeepLinkingSettingsInterface::class);
+        $settingsMock
+            ->expects($this->any())
+            ->method('normalize')
+            ->willThrowException(new Exception('custom error'));
+
+        $this->subject->buildDeepLinkingLaunchRequest(
+            $settingsMock,
+            $this->registration,
             'loginHint'
         );
-
-        var_export($message->getParameter('lti_message_hint'));
     }
 }
