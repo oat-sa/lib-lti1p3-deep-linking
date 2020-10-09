@@ -84,7 +84,11 @@ class DeepLinkingFlowTest extends TestCase
 
         $oidcAuthPlatformMessage = $oidcAuth->authenticate($oidcAuthToolRequest);
 
-        $oidcLaunchRequest = $this->createServerRequest('GET', $oidcAuthPlatformMessage->toUrl());
+        $oidcLaunchRequest = $this->createServerRequest(
+            'POST',
+            $oidcAuthPlatformMessage->getUrl(),
+            $oidcAuthPlatformMessage->getParameters()
+        );
 
         $oidcLaunchValidator = new ToolLaunchValidator($registrationRepository, $nonceRepository);
 
@@ -130,7 +134,11 @@ class DeepLinkingFlowTest extends TestCase
 
         // Step 4 - Platform content item reception and validation
 
-        $deepLinkingResponse = $this->createServerRequest('GET', $deepLinkingResponseMessage->toUrl());
+        $deepLinkingResponse = $this->createServerRequest(
+            'POST',
+            $deepLinkingResponseMessage->getUrl(),
+            $deepLinkingResponseMessage->getParameters()
+        );
 
         $deepLinkingResponseValidator = new PlatformLaunchValidator($registrationRepository, $nonceRepository);
 
@@ -156,6 +164,7 @@ class DeepLinkingFlowTest extends TestCase
 
         $returnedResource = current($returnedResourceCollection->getByType(LtiResourceLinkInterface::TYPE));
 
+        $this->assertInstanceOf(LtiResourceLinkInterface::class, $returnedResource);
         $this->assertEquals('Tool LTI Resource Link', $returnedResource->getTitle());
         $this->assertEquals('http://tool.com/launch', $returnedResource->getUrl());
     }
