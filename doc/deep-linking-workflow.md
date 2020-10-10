@@ -296,7 +296,6 @@ if (!$result->hasError()) {
 
 Once the deep linking response validation done, you can access the [returned content items](https://www.imsglobal.org/spec/lti-dl/v2p0/#content-items) from the response payload:
 
-For example:
 ```php
 <?php
 
