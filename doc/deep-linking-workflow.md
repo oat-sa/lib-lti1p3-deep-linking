@@ -306,7 +306,7 @@ use OAT\Library\Lti1p3Core\Resource\LtiResourceLink\LtiResourceLinkInterface;
 use OAT\Library\Lti1p3DeepLinking\Factory\ResourceCollectionFactory;
 
 /** @var LaunchValidationResult $result */
-$result = $validator->validatePlatformOriginatingLaunch($request);
+$result = $validator->validateToolOriginatingLaunch($request);
 
 if (!$result->hasError()) {
     // You have access to platform deep linking content items claim
