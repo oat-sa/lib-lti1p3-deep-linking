@@ -33,11 +33,11 @@ You can then find below usage tutorials, presented by topics.
 
 ### Configuration
 
-- how to [configure the underlying LTI 1.3 Core library](https://github.com/oat-sa/lib-lti1p3-core#quick-start).
+- how to [configure the underlying LTI 1.3 Core library](https://github.com/oat-sa/lib-lti1p3-core#quick-start)
 
 ### Workflow
 
-- how to [implement the Deep Linking workflow](doc/workflow.md) (for platform and / or tool)
+- how to [implement the Deep Linking workflow (for platform and / or tool)](doc/deep-linking-workflow.md)
 
 ## Tests
 
