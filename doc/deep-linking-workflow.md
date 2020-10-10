@@ -173,7 +173,9 @@ if (!$result->hasError()) {
 
 From here, up to you to decide if / how you offer content items selection: you can offer the user an `HTML Form` for example.
 
-Since this process can differ a lot between application, this library does not provide any tooling for this (to not enforce any behavior). 
+Since this process can differ a lot between tool applications, this library **does not provide any tooling for this** (to leave you free to provide your own process). 
+
+The library will take care of the rest of the process, when the tool will return the selected content items to the platform.
 
 ## 3 - Tool side: deep linking response generation
 
