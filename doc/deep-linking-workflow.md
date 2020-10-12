@@ -310,7 +310,7 @@ use OAT\Library\Lti1p3DeepLinking\Factory\ResourceCollectionFactory;
 $result = $validator->validateToolOriginatingLaunch($request);
 
 if (!$result->hasError()) {
-    // You have access to platform deep linking content items claim
+    // You have access to tool deep linking content items claim
     $contentItems = $result->getPayload()->getDeepLinkingContentItems();
 
     // You can use the ResourceCollectionFactory to ease the resources extraction as collection
@@ -322,8 +322,8 @@ if (!$result->hasError()) {
     echo $returnedLink->getUrl();        // 'http://tool.com/some-link'
 
     $returnedLtiResourceLinkLink = current($returnedResourceCollection->getByType(LtiResourceLinkInterface::TYPE));
-    echo $returnedLink->getIdentifier(); // 'ltiResourceLinkIdentifier'
-    echo $returnedLink->getUrl();        // 'http://tool.com/launch'
+    echo $returnedLtiResourceLinkLink->getIdentifier(); // 'ltiResourceLinkIdentifier'
+    echo $returnedLtiResourceLinkLink->getUrl();        // 'http://tool.com/launch'
     ...
 } 
 ```
