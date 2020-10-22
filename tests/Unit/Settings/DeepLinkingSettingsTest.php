@@ -102,4 +102,42 @@ class DeepLinkingSettingsTest extends TestCase
             $this->subject->normalize()
         );
     }
+
+
+    public function testDefaultParameters(): void
+    {
+        $subject = new DeepLinkingSettings(
+            'http://platform.com/return',
+            [
+                LinkInterface::TYPE,
+                LtiResourceLinkInterface::TYPE
+            ],
+            [
+                'iframe',
+                'window',
+                'embed'
+            ]
+        );
+
+        $this->assertTrue($subject->shouldAcceptMultiple());
+        $this->assertFalse($subject->shouldAutoCreate());
+
+        $this->assertEquals(
+            [
+                'deep_link_return_url' => 'http://platform.com/return',
+                'accept_types' => [
+                    LinkInterface::TYPE,
+                    LtiResourceLinkInterface::TYPE
+                ],
+                'accept_presentation_document_targets' => [
+                    'iframe',
+                    'window',
+                    'embed'
+                ],
+                'accept_multiple' => true,
+                'auto_create' => false,
+            ],
+            $subject->normalize()
+        );
+    }
 }

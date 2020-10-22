@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.1
+-----
+
+* Fixed DeepLinkingSettings boolean properties handling (select multiple, auto create)
+
 1.0.0
 -----
 
