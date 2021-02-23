@@ -94,7 +94,7 @@ class ResourceCollectionFactoryTest extends TestCase
     public function testCreateError(): void
     {
         $this->expectException(LtiExceptionInterface::class);
-        $this->expectExceptionMessage('Cannot build resource: Undefined index: url');
+        $this->expectExceptionMessage('Cannot build resource');
 
         $this->subject->create(
             [
