@@ -54,7 +54,7 @@ class DeepLinkingLaunchRequestBuilder extends PlatformOriginatingLaunchBuilder
                 ->withClaims($normalizedSettings)
                 ->buildMessagePayload($registration->getPlatformKeyChain())
                 ->getToken()
-                ->__toString();
+                ->toString();
 
             $this->builder
                 ->reset()

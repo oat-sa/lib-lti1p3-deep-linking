@@ -87,7 +87,7 @@ class DeepLinkingFlowTest extends TestCase
         $oidcLaunchRequest = $this->createServerRequest(
             'POST',
             $oidcAuthPlatformMessage->getUrl(),
-            $oidcAuthPlatformMessage->getParameters()
+            $oidcAuthPlatformMessage->getParameters()->all()
         );
 
         $oidcLaunchValidator = new ToolLaunchValidator($registrationRepository, $nonceRepository);
@@ -137,7 +137,7 @@ class DeepLinkingFlowTest extends TestCase
         $deepLinkingResponse = $this->createServerRequest(
             'POST',
             $deepLinkingResponseMessage->getUrl(),
-            $deepLinkingResponseMessage->getParameters()
+            $deepLinkingResponseMessage->getParameters()->all()
         );
 
         $deepLinkingResponseValidator = new PlatformLaunchValidator($registrationRepository, $nonceRepository);

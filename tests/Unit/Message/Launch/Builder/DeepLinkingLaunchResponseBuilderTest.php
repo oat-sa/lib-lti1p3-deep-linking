@@ -75,7 +75,7 @@ class DeepLinkingLaunchResponseBuilderTest extends TestCase
         $this->assertInstanceOf(LtiMessageInterface::class, $result);
 
         $payload = new LtiMessagePayload(
-            $this->parseJwt($result->getMandatoryParameter('JWT'))
+            $this->parseJwt($result->getParameters()->getMandatory('JWT'))
         );
 
         $this->assertEquals('data', $payload->getDeepLinkingData());
@@ -98,7 +98,7 @@ class DeepLinkingLaunchResponseBuilderTest extends TestCase
         $this->assertInstanceOf(LtiMessageInterface::class, $result);
 
         $payload = new LtiMessagePayload(
-            $this->parseJwt($result->getMandatoryParameter('JWT'))
+            $this->parseJwt($result->getParameters()->getMandatory('JWT'))
         );
 
         $this->assertEquals('data', $payload->getDeepLinkingData());
@@ -151,7 +151,7 @@ class DeepLinkingLaunchResponseBuilderTest extends TestCase
         $this->assertInstanceOf(LtiMessageInterface::class, $result);
 
         $payload = new LtiMessagePayload(
-            $this->parseJwt($result->getMandatoryParameter('JWT'))
+            $this->parseJwt($result->getParameters()->getMandatory('JWT'))
         );
 
         $this->assertEquals('data', $payload->getDeepLinkingData());
