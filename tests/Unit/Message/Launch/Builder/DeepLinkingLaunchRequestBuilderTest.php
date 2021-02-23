@@ -86,7 +86,7 @@ class DeepLinkingLaunchRequestBuilderTest extends TestCase
         $this->assertInstanceOf(LtiMessageInterface::class, $result);
 
         $payload = new LtiMessagePayload(
-            $this->parseJwt($result->getMandatoryParameter('lti_message_hint'))
+            $this->parseJwt($result->getParameters()->getMandatory('lti_message_hint'))
         );
 
         $this->assertEquals(['Instructor'], $payload->getRoles());
