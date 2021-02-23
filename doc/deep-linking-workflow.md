@@ -92,8 +92,8 @@ use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
 /** @var LtiMessageInterface $message */
 
 // Main message properties you can use as you want to offer the launch to the platform users
-echo $message->getUrl();             // url of the launch
-echo $message->getParameters();      // parameters of the launch
+echo $message->getUrl();                // url of the launch
+echo $message->getParameters()->all();  // array of parameters of the launch
 
 // Or use those helpers methods to ease the launch interactions
 echo $message->toUrl();                // url with launch parameters as query parameters
