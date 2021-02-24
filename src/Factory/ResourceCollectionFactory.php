@@ -39,11 +39,20 @@ use OAT\Library\Lti1p3Core\Resource\Resource;
 use OAT\Library\Lti1p3Core\Resource\ResourceCollection;
 use OAT\Library\Lti1p3Core\Resource\ResourceCollectionInterface;
 use OAT\Library\Lti1p3Core\Resource\ResourceInterface;
-use Ramsey\Uuid\Uuid;
+use OAT\Library\Lti1p3Core\Util\Generator\IdGenerator;
+use OAT\Library\Lti1p3Core\Util\Generator\IdGeneratorInterface;
 use Throwable;
 
 class ResourceCollectionFactory implements ResourceCollectionFactoryInterface
 {
+    /** @var IdGeneratorInterface */
+    private $generator;
+
+    public function __construct(IdGeneratorInterface $generator = null)
+    {
+        $this->generator = $generator ?? new IdGenerator();
+    }
+
     /**
      * @throws LtiExceptionInterface
      */
@@ -72,7 +81,7 @@ class ResourceCollectionFactory implements ResourceCollectionFactoryInterface
     private function createResource(array $resourceData): ResourceInterface
     {
         try {
-            $identifier = Uuid::uuid4()->toString();
+            $identifier = $this->generator->generate();
 
             switch ($resourceData['type']) {
                 case FileInterface::TYPE:
