@@ -25,9 +25,9 @@ namespace OAT\Library\Lti1p3DeepLinking\Message\Launch\Builder;
 use OAT\Library\Lti1p3Core\Exception\LtiException;
 use OAT\Library\Lti1p3Core\Exception\LtiExceptionInterface;
 use OAT\Library\Lti1p3Core\Message\Launch\Builder\PlatformOriginatingLaunchBuilder;
+use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
 use OAT\Library\Lti1p3Core\Message\Payload\Claim\DeepLinkingSettingsClaim;
 use OAT\Library\Lti1p3Core\Registration\RegistrationInterface;
-use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
 use OAT\Library\Lti1p3DeepLinking\Settings\DeepLinkingSettingsInterface;
 use Throwable;
 
@@ -43,11 +43,18 @@ class DeepLinkingLaunchRequestBuilder extends PlatformOriginatingLaunchBuilder
         DeepLinkingSettingsInterface $settings,
         RegistrationInterface $registration,
         string $loginHint,
-        string $deploymentId = null,
+        ?string $deepLinkingLaunchUrl = null,
+        ?string $deploymentId = null,
         array $roles = [],
         array $optionalClaims = []
     ): LtiMessageInterface {
         try {
+            $launchUrl = $deepLinkingLaunchUrl ?? $registration->getTool()->getDeepLinkingUrl();
+
+            if (null === $launchUrl) {
+                throw new LtiException('Neither deep linking url nor tool default deep linking url were presented');
+            }
+
             $normalizedSettings = $settings->normalize();
 
             $securityToken = $this->builder
@@ -63,7 +70,7 @@ class DeepLinkingLaunchRequestBuilder extends PlatformOriginatingLaunchBuilder
             return $this->buildPlatformOriginatingLaunch(
                 $registration,
                 LtiMessageInterface::LTI_MESSAGE_TYPE_DEEP_LINKING_REQUEST,
-                $registration->getTool()->getDeepLinkingUrl(),
+                $launchUrl,
                 $loginHint,
                 $deploymentId,
                 $roles,

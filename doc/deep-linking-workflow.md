@@ -74,6 +74,7 @@ $message = $builder->buildDeepLinkingLaunchRequest(
     $deepLinkingSettings,                                          // [required] deep linking settings
     $registration,                                                 // [required] related registration
     'loginHint',                                                   // [required] login hint that will be used afterwards by the platform to perform authentication
+    'http://platform.com/deep-linking-return',                     // [optional] will launch to provided url, or fallback to tool's default deep linking url if null
     null,                                                          // [optional] will use the registration default deployment id, but you can pass a specific one
     ['http://purl.imsglobal.org/vocab/lis/v2/membership#Learner'], // [optional] roles
     ['myCustomClaim' => 'myCustomValue']                           // [optional] supplementary claims if needed

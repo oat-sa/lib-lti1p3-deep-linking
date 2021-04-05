@@ -44,10 +44,10 @@ class DeepLinkingLaunchResponseBuilder extends ToolOriginatingLaunchBuilder
         ResourceCollectionInterface $resourceCollection,
         RegistrationInterface $registration,
         string $deepLinkingReturnUrl,
-        string $deploymentId = null,
-        string $deepLinkingData = null,
-        string $deepLinkingMessage = null,
-        string $deepLinkingLog = null,
+        ?string $deploymentId = null,
+        ?string $deepLinkingData = null,
+        ?string $deepLinkingMessage = null,
+        ?string $deepLinkingLog = null,
         array $optionalClaims = []
     ): LtiMessageInterface {
         try {
@@ -85,10 +85,10 @@ class DeepLinkingLaunchResponseBuilder extends ToolOriginatingLaunchBuilder
     public function buildDeepLinkingLaunchErrorResponse(
         RegistrationInterface $registration,
         string $deepLinkingReturnUrl,
-        string $deploymentId = null,
-        string $deepLinkingData = null,
-        string $deepLinkingErrorMessage = null,
-        string $deepLinkingErrorLog = null,
+        ?string $deploymentId = null,
+        ?string $deepLinkingData = null,
+        ?string $deepLinkingErrorMessage = null,
+        ?string $deepLinkingErrorLog = null,
         array $optionalClaims = []
     ): LtiMessageInterface {
         try {
