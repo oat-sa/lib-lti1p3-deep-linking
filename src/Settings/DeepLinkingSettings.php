@@ -55,11 +55,11 @@ class DeepLinkingSettings implements DeepLinkingSettingsInterface
         string $deepLinkingReturnUrl,
         array $acceptedTypes,
         array $acceptedPresentationDocumentTargets,
-        string $acceptedMediaTypes = null,
+        ?string $acceptedMediaTypes = null,
         bool $acceptMultiple = true,
         bool $autoCreate = false,
-        string $title = null,
-        string $text= null
+        ?string $title = null,
+        ?string $text= null
     ) {
         $this->deepLinkingReturnUrl = $deepLinkingReturnUrl;
         $this->acceptedTypes = $acceptedTypes;

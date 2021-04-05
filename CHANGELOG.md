@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+3.0.0
+-----
+
+* Added psalm support
+* Updated oat-sa/lib-lti1p3-core dependency to version 5.0
+* Updated DeepLinkingLaunchRequestBuilder to allow custom launch url
+* Updated overall constructors to handle nullable parameters
+* Updated documentation
+
 2.0.0
 -----
 

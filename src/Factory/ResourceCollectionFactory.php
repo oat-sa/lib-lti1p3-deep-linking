@@ -48,7 +48,7 @@ class ResourceCollectionFactory implements ResourceCollectionFactoryInterface
     /** @var IdGeneratorInterface */
     private $generator;
 
-    public function __construct(IdGeneratorInterface $generator = null)
+    public function __construct(?IdGeneratorInterface $generator = null)
     {
         $this->generator = $generator ?? new IdGenerator();
     }
