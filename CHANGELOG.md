@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+4.0.0
+-----
+
+* Added github actions CI
+* Removed jenkins and travis CI
+* Updated oat-sa/lib-lti1p3-core dependency to version 6.0
+* Updated documentation
+
 3.0.0
 -----
 
