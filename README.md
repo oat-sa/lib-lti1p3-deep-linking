@@ -15,7 +15,7 @@
 - [TAO LTI 1.3 PHP framework](#tao-lti-13-php-framework)
 - [IMS](#ims)
 - [Installation](#installation)
-- [Tutorials](#tutorials)
+- [Documentation](#documentation)
 - [Tests](#tests)
 
 ## TAO LTI 1.3 PHP framework
