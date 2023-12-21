@@ -1,6 +1,10 @@
 name: Build
 
-on: push
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -10,10 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         php: [8.0, 8.1, 8.2, 8.3]
-        coverage: ["true"]
+        coverage: ["false"]
         include:
         - php: 8.3
-          coverage: "false" # PHPUnit 8.5.14 doesn't support code coverage under PHP 8
+          coverage: "true" # Collecting coverage reports only once
 
     steps:
     - name: Checkout
