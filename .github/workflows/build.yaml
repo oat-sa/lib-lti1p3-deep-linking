@@ -44,9 +44,5 @@ jobs:
       run: |
         ./vendor/bin/psalm --shepherd
     
-    - name: Coveralls
-      if: ${{ matrix.coverage == 'true' }}
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        ./vendor/bin/php-coveralls -v
+    - name: Push coverage report to codecov
+      uses: codecov/codecov-action@v5

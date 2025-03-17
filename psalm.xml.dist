@@ -1,25 +1,42 @@
-<?xml version="1.0"?>
-<psalm
-        autoloader="vendor/autoload.php"
-        errorLevel="3"
-        hideExternalErrors="true"
-        useDocblockTypes="false"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="https://getpsalm.org/schema/config"
-        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
->
-    <projectFiles>
-        <directory name="src"/>
-        <ignoreFiles>
-            <directory name="doc"/>
-            <directory name="tests"/>
-            <directory name="vendor"/>
-        </ignoreFiles>
-    </projectFiles>
-    <mockClasses>
-        <class name="PHPUnit\Framework\MockObject\MockObject"/>
-    </mockClasses>
-    <plugins>
-        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
-    </plugins>
+<?xml version="1.0" encoding="UTF-8"?>
+<psalm autoloader="vendor/autoload.php" errorLevel="3" hideExternalErrors="true" useDocblockTypes="false" xmlns="https://getpsalm.org/schema/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd">
+  <projectFiles>
+    <directory name="src"></directory>
+    <ignoreFiles>
+      <directory name="doc"></directory>
+      <directory name="tests"></directory>
+      <directory name="vendor"></directory>
+    </ignoreFiles>
+  </projectFiles>
+  <issueHandlers>
+    <MissingOverrideAttribute errorLevel="suppress"></MissingOverrideAttribute>
+    <PossiblyUnusedMethod errorLevel="suppress"></PossiblyUnusedMethod>
+    <UnusedClass errorLevel="suppress"></UnusedClass>
+    <UnusedClass>
+      <errorLevel type="suppress">
+        <file name="src/Factory/ResourceCollectionFactory.php"></file>
+        <file name="src/Message/Launch/Builder/DeepLinkingLaunchRequestBuilder.php"></file>
+        <file name="src/Message/Launch/Builder/DeepLinkingLaunchResponseBuilder.php"></file>
+        <file name="src/Settings/DeepLinkingSettings.php"></file>
+      </errorLevel>
+    </UnusedClass>
+    <MissingOverrideAttribute>
+      <errorLevel type="suppress">
+        <file name="src/Factory/ResourceCollectionFactory.php"></file>
+        <file name="src/Settings/DeepLinkingSettings.php"></file>
+      </errorLevel>
+    </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <errorLevel type="suppress">
+        <file name="src/Factory/ResourceCollectionFactoryInterface.php"></file>
+        <file name="src/Settings/DeepLinkingSettingsInterface.php"></file>
+      </errorLevel>
+    </PossiblyUnusedMethod>
+  </issueHandlers>
+  <mockClasses>
+    <class name="PHPUnit\Framework\MockObject\MockObject"></class>
+  </mockClasses>
+  <plugins>
+    <pluginClass class="Psalm\PhpUnitPlugin\Plugin"></pluginClass>
+  </plugins>
 </psalm>
