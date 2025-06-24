@@ -6,7 +6,7 @@
     "require": {
         "ext-json": "*",
         "php": ">=8.0.0",
-        "oat-sa/lib-lti1p3-core": "dev-feat/TR-6514/php-84 as 7.2.1"
+        "oat-sa/lib-lti1p3-core": "7.2.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6 || ^12",
